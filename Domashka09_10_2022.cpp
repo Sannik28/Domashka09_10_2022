@@ -6,6 +6,9 @@
 
 #include <iostream>
 #include<Windows.h>
+#include <string>
+
+
 
 using namespace std;
 
@@ -140,13 +143,16 @@ void f4(int** arr2, int n, int m) {
 	Print(new_arr2, n, m);
 }
 //имя и телефон с поиском
+/* неудачная попытка ;(
 void f5name(string** arr, char* name) {
 	int cout = 0;
 	int n;
+	string tel;
 		for (int i = 0; i < 3; i++) {
 			if (arr[1][i]== name) {
 				cout << "Телефон данного абонента ";
-				cout << arr[2][i];
+				tel= arr[2][i];
+				cout << tel;
 				n = i;
 				cout++;
 			}
@@ -162,14 +168,6 @@ void f5name(string** arr, char* name) {
 			arr[2][n] = name;
 		}
 	}
-
-
-
-
-
-
-
-
 
 void f5tel(string** arr, char* tel) {
 	int cout = 0;
@@ -197,6 +195,77 @@ void f5tel(string** arr, char* tel) {
 	//Delete(arr2, m);
 	//Print(new_arr2, n, m);
 }
+*/
+void searchByName(char** arr, const char* name) 
+{
+	//массив для хранения искомого имени и телефона
+	char** info = new char* [2];
+	info[0] = new char[strlen(name) + 1];
+	info[1] = new char[16];
+	//стартовое и конечное положение в массиве
+	int start = strlen(arr[0]) - strlen(strstr(arr[0], name));
+	//cout << "1. " << strstr(arr[0], name)<<endl; //при поиске Смирнова выдает Смирнов, Петров первое вхождение
+	//cout << "2. "<<strlen(strstr(arr[0], name)) << endl;//15 - измеряем длину строки от начала Смирнова
+	//cout << "3. " << start << endl; //8- количество знаков до Смирнова
+	int end;
+	if (strchr(arr[0] + start, ',') != 0) {//если Смирнов не в конце, после него стоит ','
+		//cout << endl<< "4. " << strchr(arr[0] + start, ','); //  , Петров мы нашли где Смирнов заканчивается
+		end = strlen(arr[0]) - strlen(strchr(arr[0] + start, ','));//Нашли количество символов после Смирнова
+		//cout << endl << "5. " << arr[0] - strchr(arr[0] + start, ',');
+	}
+
+	else
+		end = strlen(arr[0]);//если фамилия в конце то конец знаков после искомой фамилии-все знаки
+	//копирование имени в новый масиив
+	strncpy_s(info[0], end - start + 1, arr[0] + start, end - start);//куда копируем, количество резервируемых символов, откуда, количество
+	 // поиск и копирвоание соответствующего имени номера телефона
+	int c = 0, i = 0;
+	while (i < start - 1 && strchr(arr[0] + i, ',') != 0) {//считаекм количество запятых до старта
+		i = strlen(arr[0]) - strlen(strchr(arr[0] + i, ',')) + 1;//увеличиваем i до знака после запятой
+		c++;
+	}
+	strncpy_s(info[1], 16, arr[1] + 17 * c, 15);//15- количество символов номера телефона копируем в массив info телефон искомого абонента
+	cout << info[1];
+	}
+
+char** searchByTel(char** arr, const char* tel)
+{
+	char** info = new char* [2];
+	info[0] = new char[255];
+	info[1] = new char[17];
+	int start = strlen(arr[1]) - strlen(strstr(arr[1], tel));
+	int end=15;
+	strncpy_s(info[1], 16, arr[1] + start, 15);
+	int c, k=0;
+	c = start / 17; //какой по счету номер-имя
+	int st, en;
+	int i=0;
+	while (i < start - 1 && strchr(arr[0] + i, ',') != 0) {//считаекм количество запятых до старта
+		i = strlen(arr[0]) - strlen(strchr(arr[0] + i, ',')) + 1;//увеличиваем i до знака после запятой
+		k++;
+		if (c == k) {
+			st = i;
+		}
+		if (c-1==k) {
+			en = i;
+	}
+	strncpy_s(info[0], en - st + 1, arr[0] + st, en - st);
+	cout << info[0];
+	/*
+	}
+	/* //более быстрый способ и проще в реализации, но нужно все данные вносить в отдельный массив 1 - фамилия 2 - телефон 3 - фамилия ...
+	for (int i = 0; i < 6; i += 2) {
+		if (strcmp(arr[i], name) == 0) {
+			strcpy_s(info[0], strlen(arr[i]) + 1, arr[i]);
+			strcpy_s(info[1], strlen(arr[i+1]) + 1, arr[i+1]);
+			break;
+		}
+		*/
+	}
+	return info;
+
+}
+
 //структура автомобиль (длина клиренс,объем двиг, мощн, диам, цвет, коробка
 struct Avto {
 	string marka;
@@ -213,7 +282,9 @@ struct Avto {
 
 int main()
 {
-	//задания 1 и 2
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	//задания 1 и 2);
 	/*
 	int stolb = 5;
 	int strok = 2;
@@ -274,6 +345,8 @@ int main()
 	*/
 	
 	//задание 5 имя и телефон с поиском
+	/*
+	//безуспешная попытка решить задачку
 	string** arr = new string * [2];
 	char name[80], tel[80];
 	for (int i = 0; i < 3; i++) {
@@ -294,7 +367,64 @@ int main()
 	cout << "Поиск по номеру телефона\nВведите номер телефона\n";
 	cin.getline(tel, 80, '\n');
 	f5tel(arr, tel);
+	*/
+	char** info = new char* [2];
+	info[0] = new char[255]{ "Иванов, Смирнов, Петров" };
+	info[1] = new char[255]{ "+7111-111-11-11, +7222-222-22-22, +7333-333-33-33" };
+	cout << "Осуществить поиск 1 - телефона по фамилии 2 - фамилии по номеру телефона 3 - выход" << endl;
+	int vib;
+	cin >> vib;
+	do {
+		if (vib == 1) {
+			char* name = new char[255];
+			cout << "Введите фамилию абонента\n";
+			cin.ignore();
+			gets_s(name, strlen(name));
+			//gets_s(name, 255);
+			searchByName(info, name);
+			vib == 3;
+		}
+		else if (vib == 2) {
+			char* tel = new char[255];
+			cout << "Введите телефон абонента\n";
+			cin.ignore();
+			gets_s(tel, strlen(tel));
+			searchByTel(info, tel);
+			vib == 3;
+		}
+	} while (vib != 3);
 	
+	// 2 вариант
+	/*
+	char** info = new char* [6];
+	info[0] = new char[255]{ "Иванов"};
+	info[1] = new char[255]{ "+7111-111-11-11" };
+	info[2] = new char[255]{ "Смирнов" };
+	info[3] = new char[255]{ "+7111-111-11-11" };
+	info[4] = new char[255]{ "Сидоров" };
+	info[5] = new char[255]{ "+7111-111-11-11" };
+	cout << "Осуществить поиск 1 - телефона по фамилии 2 - фамилии по номеру телефона 3 - выход" << endl;
+	int vib;
+	cin >> vib;
+	do {
+		if (vib == 1) {
+			cout << "Введите фамилию абонента\n";
+			char name[256];
+			gets_s(name, 256);
+			printf("Введено ", name);
+			searchByName(info, name);
+		}
+		else if (vib == 2) {
+			cout << "Введите телефон абонента\n";
+			char* tel = new char[256];
+			gets_s(tel, 256);
+			searchByTel(info, tel);
+		}
+		else if (vib == 3) {
+			cout << "Выбран выход из программы\n";
+		}
+	} while (vib != 3);
+	*/
 	/*
 	Avto Lada = { "Lada ",11,12,13, 14, 15, {"Blue"},{"robot"}};
 	Avto Opel = { "Opel ",21,22,23, 24, 25, {"Black"},{"ruchn"} };
