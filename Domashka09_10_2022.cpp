@@ -482,6 +482,71 @@ void SortIzd() {
 	delete[]obmen;
 }
 
+struct complex1
+{
+	float Re;
+	float Im;
+};
+
+complex1 vvod1()
+{
+	complex1 temp;
+	cout << "Введите действительную часть числа\n ";
+	cin >> temp.Re;
+	cout << "Введите мнимую часть комплексного числа\n ";
+	cin >> temp.Im;
+	return temp;
+}
+void vivod(complex1 chislo)
+{
+	cout << chislo.Re;
+	if (chislo.Im >= 0)
+		cout << " + " << chislo.Im << "i " << endl;
+	else
+		cout << " " << chislo.Im << "i " << endl;
+}
+//Функция сложения двух чисел в алгебраической форме,
+//pr определяет, выводить или нет число на экран.
+complex1 plus1(complex1 chislo1, complex1 chislo2, bool pr = true)
+{
+	complex1 temp;
+	temp.Re = chislo1.Re + chislo2.Re;
+	temp.Im = chislo1.Im + chislo2.Im;
+	if (pr) vivod(temp);
+	return temp;
+}
+//Функция вычитания двух чисел в алгебраической форме,
+//pr определяет, выводить или нет число на экран.
+complex1 minus1(complex1 chislo1, complex1 chislo2, bool pr = true)
+{
+	complex1 temp;
+	temp.Re = chislo1.Re - chislo2.Re;
+	temp.Im = chislo1.Im - chislo2.Im;
+	if (pr) vivod(temp);
+	return temp;
+}
+//Функция умножения двух чисел в алгебраической форме,
+//pr определяет, выводить или нет число на экран.
+complex1 mult1(complex1 chislo1, complex1 chislo2, bool pr = true)
+{
+	complex1 temp;
+	temp.Re = chislo1.Re * chislo2.Re - chislo1.Im * chislo2.Im;
+	temp.Im = chislo1.Im * chislo2.Re + chislo1.Re * chislo2.Im;
+	if (pr) vivod(temp);
+	return temp;
+}
+//Функция деления двух чисел в алгебраической форме,
+//pr определяет, выводить или нет число на экран.
+complex1 divide1(complex1 chislo1, complex1 chislo2, bool pr = true)
+{
+	complex1 temp;
+	temp.Re = (chislo1.Re * chislo2.Re + chislo1.Im * chislo2.Im) / (chislo2.Re * chislo2 .
+		Re + chislo2.Im * chislo2.Im);
+	temp.Im = (chislo1.Im * chislo2.Re - chislo1.Re * chislo2.Im) / (chislo2.Re * chislo2 .
+		Re + chislo2.Im * chislo2.Im);
+	if (pr) vivod(temp);
+	return temp;
+}
 
 int main()
 {
@@ -716,12 +781,47 @@ int main()
 	} while (vib > 0 && vib < 7);
 	*/
 //задание 4 реализовать структура машина (цвет модель номер номер или слово до 8 символов
-struct Car {
+//разберем на уроке тк не проходили объединения
+/*
+union num {
+	int i;
+	char сh[9];
+};
+struct CAR {
 	char color[30];
 	char model[30];
 	num number;
 };
 
+void add(CAR car)
+{
+	cout << "Color" << endl;
+	cin.getline(car.color, 30);
+	cout << "Model" << endl;
+	cin.getline(car.model, 30);
+	cout << "Number" << endl;
+	cin.getline(car.number.ch, 9);
+}
+*/
+//Задание 1 комплексное число
+/*
+complex1 chislo1, chislo2, chislo5;
+chislo1 = vvod1();
+chislo2 = vvod1();
+cout << "Комплексное число 1: ";
+vivod(chislo1);
+cout << "Комплексное число 2: ";
+vivod(chislo2);
+cout << "Сумма чисел: ";
+chislo5 = plus1(chislo1, chislo2, true);
+cout << "Разность чисел: ";
+chislo5 = minus1(chislo1, chislo2, true);
+cout << "Произведение чисел: ";
+chislo5 = mult1(chislo1, chislo2, true);
+cout << "Деление чисел: ";
+chislo5 = divide1(chislo1, chislo2, true);
+cout << "Возведение в степень 5: " << endl;
+*/
 }
 	
 
