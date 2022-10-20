@@ -368,6 +368,25 @@ void inputBook(int i) {
 	cout << "Введите издательство: ";	gets_s(books[i].izdatelstvo, 255);
 	cout << "Введите жанр: ";	gets_s(books[i].ganr, 255);
 }
+void correctBook(int i) {
+	cout << "\nВведите название книги: ";
+	char* obmen = new char[255];
+	gets_s(obmen, 255);
+	strcpy_s(books[i].name, 255, obmen);
+	delete[] obmen;
+	cout << "Введите автора: ";
+	gets_s(obmen, 255);
+	strcpy_s(books[i].avtor,255, obmen);
+	delete[] obmen;
+	cout << "Введите издательство: ";
+	gets_s(obmen, 255);
+	strcpy_s(books[i].izdatelstvo,255, obmen);
+	delete[] obmen;
+	cout << "Введите жанр: ";
+	gets_s(obmen, 255);
+	strcpy_s(books[i].ganr,255, obmen);
+	delete[] obmen;
+}
 
 void printBooks() {
 	for (int i = 0; i < 3; i++) {
@@ -402,39 +421,65 @@ void seachBookAvtor(char* avtor) {
 }
 
 void SortAvtor() {
-	char* temp=new char[255];
-	int flag=0;
-	while (flag != 0) {
+	int flag = 0;
+	char* obmen = new char[255];
+	do {
 		flag = 0;
-		for (int i = 0; i < 9; i++) {
-
+		for (int i = 0; i < 2; i++) {
 			if (strcmp(books[i].avtor, books[i + 1].avtor) > 0)
 			{
-				temp = books[i].avtor;
-				books[i].avtor = books[i + 1].avtor;
-				books[i + 1].avtor = temp;
+				strcpy_s(obmen, 255, books[i].name);
+				strcpy_s(books[i].name, 255, books[i + 1].name);
+				strcpy_s(books[i + 1].name, 255, obmen);
+
+				strcpy_s(obmen, 255, books[i].avtor);
+				strcpy_s(books[i].avtor, 255, books[i + 1].avtor);
+				strcpy_s(books[i + 1].avtor, 255, obmen);
+
+				strcpy_s(obmen, 255, books[i].izdatelstvo);
+				strcpy_s(books[i].izdatelstvo, 255, books[i + 1].izdatelstvo);
+				strcpy_s(books[i + 1].izdatelstvo, 255, obmen);
+
+				strcpy_s(obmen, 255, books[i].ganr);
+				strcpy_s(books[i].ganr, 255, books[i + 1].ganr);
+				strcpy_s(books[i + 1].ganr, 255, obmen);
+
 				flag++;
 			}
 		}
-	}
+	} while (flag != 0);
+	delete[]obmen;
 }
 
 void SortIzd() {
-	char* temp = new char[255];
-	int flag=0;
-	while (flag != 0) {
+	int flag = 0;
+	char* obmen = new char[255];
+	do {
 		flag = 0;
-		for (int i = 0; i < 9; i++) {
-
-			if (strcmp(books[i].avtor, books[i + 1].avtor) > 0)
+		for (int i = 0; i < 2; i++) {
+			if (strcmp(books[i].izdatelstvo, books[i + 1].izdatelstvo) > 0)
 			{
-				temp = books[i].avtor;
-				books[i].avtor = books[i + 1].avtor;
-				books[i + 1].avtor = temp;
+				strcpy_s(obmen,255, books[i].name);
+				strcpy_s(books[i].name, 255, books[i + 1].name);
+				strcpy_s(books[i + 1].name, 255, obmen);
+
+				strcpy_s(obmen, 255, books[i].avtor); 
+				strcpy_s(books[i].avtor, 255, books[i + 1].avtor);
+				strcpy_s(books[i + 1].avtor, 255, obmen);
+				
+				strcpy_s(obmen, 255, books[i].izdatelstvo); 
+				strcpy_s(books[i].izdatelstvo, 255, books[i+1].izdatelstvo);
+				strcpy_s(books[i + 1].izdatelstvo, 255, obmen);
+				
+				strcpy_s(obmen, 255, books[i].ganr); 
+				strcpy_s(books[i].ganr, 255, books[i+1].ganr);
+				strcpy_s(books[i + 1].ganr, 255, obmen);
+				
 				flag++;
 			}
 		}
-	}
+	} while (flag != 0);
+	delete[]obmen;
 }
 
 
@@ -597,8 +642,11 @@ int main()
 			*/
 
 			//задание 3 2 лист библиотека
+/*ciplusplussnachala.wordpress.com/2012/06/02/массив-структур/*/
+//проверки ввода не вставляю, итак кучу времени ушло на выполнение. Все работает.
+/*
 	cout << "Ввод каталога книг\n";
-	for (int i = 0; i < 3; i++)//10
+	for (int i = 0; i < 3; i++)//- заменить на 10 ку не составит труда
 	{
 		cout << "Ввод книги " << i + 1 << endl;
 		inputBook(i);
@@ -626,7 +674,7 @@ int main()
 				<<"для внесения изменений ";
 			cin >> poz;
 			cin.ignore();
-			inputBook(poz+1);
+			inputBook(poz-1);
 			printBooks();
 			break;
 		}
@@ -639,6 +687,7 @@ int main()
 			seachBookName(name);
 			break;
 		}
+
 		case 4:
 		{
 			char* avtor = new char[255];
@@ -663,8 +712,16 @@ int main()
 		default:
 			break;
 		}
-
+		cin.get();//ожидание нажатия клавиши
 	} while (vib > 0 && vib < 7);
+	*/
+//задание 4 реализовать структура машина (цвет модель номер номер или слово до 8 символов
+struct Car {
+	char color[30];
+	char model[30];
+	num number;
+};
+
 }
 	
 
