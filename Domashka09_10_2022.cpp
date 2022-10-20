@@ -294,17 +294,149 @@ char** searchByTel2(char** arr, const char* tel) {
 
 //структура автомобиль (длина клиренс,объем двиг, мощн, диам, цвет, коробка
 struct Avto {
-	string marka;
+	
+	char* marka = new char[255];
 	struct {
-		int l;
-		int h;
-		int Vd;
-		int P;
-		int d;
-		string color;
-		string korobka;
+		int l{};
+		int h{};
+		int Vd{};
+		int P{};
+		int d{};
+		char* color = new char[255];
+		char* korobka = new char[255];
 	}avtom;
 };
+Avto cars[3];
+void inputAvto(int i) {
+	cout << "\nВведите марку: ";
+	gets_s(cars[i].marka, 255);
+	cout << "Введите длину машины: ";	cin >> cars[i].avtom.l;
+	cout << "Введите высоту машины: ";	cin >> cars[i].avtom.h;
+	cout << "Введите объем двигателя машины: ";	cin >> cars[i].avtom.Vd;
+	cout << "Введите мощность машины: ";	cin >> cars[i].avtom.P;
+	cout << "Введите диаметр колес машины: ";	cin >> cars[i].avtom.d;
+	cin.ignore();
+	cout << "Введите цвет машины: ";	gets_s(cars[i].avtom.color, 255);
+	cout << "Введите тип коробки передач машины: "; gets_s(cars[i].avtom.korobka, 255);
+}
+
+void printAvto() {
+	for (int i = 0; i < 3; i++) {
+		cout << "Марка машины: \t"<< cars[i].marka<<endl;
+		cout << "Длина машины: \t" << cars[i].avtom.l << endl;
+		cout << "Высота машины: \t" << cars[i].avtom.h << endl;
+		cout << "Объем двигателя машины: \t" << cars[i].avtom.Vd << endl;
+		cout << "Мощность машины: \t" << cars[i].avtom.P << endl;
+		cout << "Диаметр колес машины: \t" << cars[i].avtom.d << endl;
+		cout << "Цвет машины: \t" << cars[i].avtom.color << endl;
+		cout << "Коробка передач машины: \t" << cars[i].avtom.korobka << endl;
+	}
+}
+void showAvto(int i) {
+	//cout << "Марка машины: \t"<< car->marka<<endl;
+	cout << "Длина машины: \t" << cars[i].avtom.l << endl;
+	cout << "Высота машины: \t" << cars[i].avtom.h << endl;
+	cout << "Объем двигателя машины: \t" << cars[i].avtom.Vd << endl;
+	cout << "Мощность машины: \t" << cars[i].avtom.P << endl;
+	cout << "Диаметр колес машины: \t" << cars[i].avtom.d << endl;
+	cout << "Цвет машины: \t" << cars[i].avtom.color << endl;
+	cout << "Коробка передач машины: \t" << cars[i].avtom.korobka << endl;
+}
+
+int seachAvto(char* m) {
+	int in;
+	for (int i = 0; i < 3; i++)
+	{
+		if (strncmp(cars[i].marka, m, strlen(m))==0)  in=i; 
+	}
+	return in;
+}
+//библиотека задание 2 2 лист
+struct Book {
+	char* name = new char[255];//название автор издательство жанр
+	char* avtor= new char[255];
+	char* izdatelstvo = new char[255];
+	char* ganr = new char[255];
+};
+
+Book books[10];
+
+void inputBook(int i) {
+	cout << "\nВведите название книги: "; 
+	gets_s(books[i].name, 255);
+	cout << "Введите автора: ";	gets_s(books[i].avtor, 255);
+	cout << "Введите издательство: ";	gets_s(books[i].izdatelstvo, 255);
+	cout << "Введите жанр: ";	gets_s(books[i].ganr, 255);
+}
+
+void printBooks() {
+	for (int i = 0; i < 3; i++) {
+		cout << "Название книги: \t" << books[i].name << endl;
+		cout << "Автор: \t" << books[i].avtor << endl;
+		cout << "Издательство: \t" << books[i].izdatelstvo << endl;
+		cout << "Жанр: \t" << books[i].ganr << endl;
+	}
+}
+void showBooks(int i) {
+	cout << "Название книги: \t" << books[i].name << endl;
+	cout << "Автор: \t" << books[i].avtor << endl;
+	cout << "Издательство: \t" << books[i].izdatelstvo << endl;
+	cout << "Жанр: \t" << books[i].ganr << endl;
+}
+
+void seachBookName(char* name) {
+	for (int i = 0; i < 3; i++)
+	{
+		if (strncmp(books[i].name, name, strlen(name)) == 0) {
+			showBooks(i);
+		}
+	}
+}
+void seachBookAvtor(char* avtor) {
+	for (int i = 0; i < 3; i++)
+	{
+		if (strncmp(books[i].avtor, avtor, strlen(avtor)) == 0) {
+			showBooks(i);
+		}
+	}
+}
+
+void SortAvtor() {
+	char* temp=new char[255];
+	int flag=0;
+	while (flag != 0) {
+		flag = 0;
+		for (int i = 0; i < 9; i++) {
+
+			if (strcmp(books[i].avtor, books[i + 1].avtor) > 0)
+			{
+				temp = books[i].avtor;
+				books[i].avtor = books[i + 1].avtor;
+				books[i + 1].avtor = temp;
+				flag++;
+			}
+		}
+	}
+}
+
+void SortIzd() {
+	char* temp = new char[255];
+	int flag=0;
+	while (flag != 0) {
+		flag = 0;
+		for (int i = 0; i < 9; i++) {
+
+			if (strcmp(books[i].avtor, books[i + 1].avtor) > 0)
+			{
+				temp = books[i].avtor;
+				books[i].avtor = books[i + 1].avtor;
+				books[i + 1].avtor = temp;
+				flag++;
+			}
+		}
+	}
+}
+
 
 int main()
 {
@@ -369,7 +501,6 @@ int main()
 	cout << endl;
 	f4(arr2, n, m);
 	*/
-	
 	//задание 5 имя и телефон с поиском
 	/*
 	//безуспешная попытка решить задачку
@@ -420,49 +551,123 @@ int main()
 		}
 	} while (vib != 3);
 	*/
-	// 2 вариант
-	char** info = new char* [6];
-	info[0] = new char[255]{ "Иванов"};
-	info[1] = new char[255]{ "+7111-111-11-11" };
-	info[2] = new char[255]{ "Смирнов" };
-	info[3] = new char[255]{ "+7222-111-11-11" };
-	info[4] = new char[255]{ "Сидоров" };
-	info[5] = new char[255]{ "+7333-111-11-11" };
+	/*
+		// 2 вариант
+		char** info = new char* [6];
+		info[0] = new char[255]{ "Иванов"};
+		info[1] = new char[255]{ "+7111-111-11-11" };
+		info[2] = new char[255]{ "Смирнов" };
+		info[3] = new char[255]{ "+7222-111-11-11" };
+		info[4] = new char[255]{ "Сидоров" };
+		info[5] = new char[255]{ "+7333-111-11-11" };
+		int vib;
+		do {
+		cout << "Осуществить поиск 1 - телефона по фамилии 2 - фамилии по номеру телефона 3 - выход" << endl;
+		cin >> vib;
+			if (vib == 1) {
+				char* name = new char[100];
+				cout << "Введите фамилию абонента\n";
+				cin.ignore();
+				gets_s(name, strlen(name));
+				//gets_s(name, 255);
+				searchByName2(info, name);
+			}
+			else if (vib == 2) {
+				char* tel = new char[17];
+				cout << "Введите телефон абонента\n";
+				cin.ignore();
+				gets_s(tel, strlen(tel));
+				searchByTel2(info, tel);
+			}
+		} while (vib != 3);
+		*/
+		/*
+		//задание 2 2 лист автомобиль
+		//Avto lada = { (char*)"Lada", {11,12,13, 14, 15, (char*)"Blue",(char*)"robot"} };
+			for (int i = 0; i < 3; i++)
+			{
+				inputAvto(i);
+			}
+			printAvto();
+			cout << "Введите марку машины для поиска\n";
+			char* m = new char[255];
+			cin >> m;
+			int i=seachAvto(m);
+			showAvto(i);
+			*/
+
+			//задание 3 2 лист библиотека
+	cout << "Ввод каталога книг\n";
+	for (int i = 0; i < 3; i++)//10
+	{
+		cout << "Ввод книги " << i + 1 << endl;
+		inputBook(i);
+	}
 	int vib;
 	do {
-	cout << "Осуществить поиск 1 - телефона по фамилии 2 - фамилии по номеру телефона 3 - выход" << endl;
-	cin >> vib;
-		if (vib == 1) {
-			char* name = new char[100];
-			cout << "Введите фамилию абонента\n";
-			cin.ignore();
-			gets_s(name, strlen(name));
-			//gets_s(name, 255);
-			searchByName2(info, name);
+		cout << "\n\nДля вывода каталога на экран нажмите 1\n"
+			<< "Для внесения изменений нажмите 2\n"
+			<< "Для поиска книги по названию нажмите 3\n"
+			<< "Для поиска книги по автору нажмите 4\n"
+			<< "Для сортировки книги по названию нажмите 5\n"
+			<< "Для сортировки книг по издательству нажмите 6\n"
+			<< "Для выхода нажмите другую цифру";
+		cin >> vib;
+		switch (vib) {
+		case 1:
+		{
+			printBooks();
+			break;
 		}
-		else if (vib == 2) {
-			char* tel = new char[17];
-			cout << "Введите телефон абонента\n";
+		case 2:
+		{
+			int poz;
+			cout << "Укажите номер позиции каталога"
+				<<"для внесения изменений ";
+			cin >> poz;
 			cin.ignore();
-			gets_s(tel, strlen(tel));
-			searchByTel2(info, tel);
+			inputBook(poz+1);
+			printBooks();
+			break;
 		}
-	} while (vib != 3);
-	
-	/*
-	Avto Lada = { "Lada ",11,12,13, 14, 15, {"Blue"},{"robot"}};
-	Avto Opel = { "Opel ",21,22,23, 24, 25, {"Black"},{"ruchn"} };
-	Avto Lexus = { "Lexus ",31,32,33, 34, 35, {"Yellow"},{"auto"} };
-	*/
+		case 3:
+		{
+			char* name = new char[255];
+			cout << "Введите название книги для поиска\n";
+			cin.ignore();
+			gets_s(name, 255);
+			seachBookName(name);
+			break;
+		}
+		case 4:
+		{
+			char* avtor = new char[255];
+			cout << "Введите автора книги для поиска\n";
+			cin.ignore();
+			gets_s(avtor, 255);
+			seachBookName(avtor);
+			break;
+		}
+		case 5:
+		{
+			SortAvtor();
+			printBooks();
+			break;
+		}
+		case 6:
+		{
+			SortIzd();
+			printBooks();
+			break;
+		}
+		default:
+			break;
+		}
+
+	} while (vib > 0 && vib < 7);
 }
 	
-/*
-	arr**[0] = new char[256] {"Hello "};
-	arr[1] = new char[256] {"my "};
-	arr[2] = new char[256] {"friend "};
-	char* str = new char[256] {"and goodbye"};
-	//arr = f1(arr, str);
-	*/
+
 
 
 
